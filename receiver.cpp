@@ -1,5 +1,9 @@
-
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 #include"util.hpp"
+
+using namespace std;
 
 int main(int argc, char **argv)
 {
@@ -12,11 +16,20 @@ int main(int argc, char **argv)
 
 	printf("Receiver now listening.\n");
 
+	uint64_t int_array[10];
+	uint64_t addr;
+ 
 	bool listening = true;
 	while (listening) {
+		for (int i=0; i<10; i++){
 
+			addr = (long long)&int_array[i];
+
+			uint32_t time_passed = measure_one_block_access_time(addr);
+			cout<< "time passed = "<<time_passed<<endl;
+
+		}
 		// Put your covert channel code here
-
 	}
 
 	printf("Receiver finished.\n");
