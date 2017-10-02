@@ -1,6 +1,6 @@
 
 #include"util.hpp"
-
+#include <unistd.h>
 
 #define set_number 8
 #define set_jump 1024
@@ -16,6 +16,7 @@ void establish_covert_channel(char *communication_buffer){
 
   for(iter=0; iter<repetition_num; iter++){
 	communication_buffer[i] = 'a';	
+	sleep(0.000001);
   }
 }
 
