@@ -1,38 +1,67 @@
+#include "util.hpp"
 #include <iostream>
-#include"util.hpp"
 
 using namespace std;
 
-int main(int argc, char **argv)
-{
-	// Put your covert channel setup code here
+// helper function that prepares the channel
+// for communication with the sender.
+// To do this we fill the whole L3 cache with our dataset.
+void prepare_channel(char *channel, uint32_t *sets);
 
-	printf("Please press enter.\n");
+int main(int argc, char **argv) {
+  // Put your covert channel setup code here
 
-	char text_buf[2];
-	fgets(text_buf, sizeof(text_buf), stdin);
+  char *channel;
+  uint32_t sets[L3_SETS];
 
-	printf("Receiver now listening.\n");
+  // Allocate enough memory to cover the whole L3
+  channel = (char *)malloc(L3_SIZE);
 
-	uint64_t int_array[10];
-	uint64_t addr;
- 
-	bool listening = true;
-	while (listening) {
-		for (int i=0; i<10; i++){
+  if (channel == NULL) {
+    cerr << "Failed to allocate memory of size " << L3_SIZE << " bytes";
+    return -1;
+  }
 
-			addr = (long long)&int_array[i];
+  prepare_channel(channel, &sets[0]);
 
-			uint32_t time_passed = measure_one_block_access_time(addr);
-			cout<< "time passed = "<<time_passed<<endl;
+  printf("Please press enter.\n");
 
-		}
-		// Put your covert channel code here
-	}
+  char text_buf[2];
+  fgets(text_buf, sizeof(text_buf), stdin);
 
-	printf("Receiver finished.\n");
+  printf("Receiver now listening.\n");
 
-	return 0;
+  uint64_t int_array[10];
+  uint64_t addr;
+
+  bool listening = true;
+  while (listening) {
+    for (int i = 0; i < 10; i++) {
+
+      addr = (uint64_t)&int_array[i];
+
+      uint32_t time_passed = measure_one_block_access_time(addr);
+      cout << "time passed = " << time_passed << endl;
+    }
+    // Put your covert channel code here
+  }
+
+  printf("Receiver finished.\n");
+
+  return 0;
 }
 
+void prepare_channel(char *channel, uint32_t *sets) {
 
+  uint32_t time_passed;
+  // initialize the channel
+  memset(channel, 1, L3_SIZE);
+  uint64_t addr = (uint64_t)&channel[0];
+  sleep(SLEEP_TIME);
+
+  for (uint32_t i = 0; i < L3_SETS; i++) {
+    time_passed = measure_one_block_access_time(addr);
+    sets[i] += (time_passed > HIT_TIME ? 0 : 1);
+    addr += CACHE_LINE_SIZE;
+  }
+}
