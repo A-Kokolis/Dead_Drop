@@ -29,7 +29,7 @@
 
 #define SET_NUM 8
 #define SET_JUMP 1024
-#define REPETION_NUM 100
+#define REPETITION_NUM 100
 
 CYCLES measure_one_block_access_time(ADDR_PTR addr);
 
