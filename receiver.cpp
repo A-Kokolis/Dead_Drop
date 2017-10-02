@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
       addr = (uint64_t)&int_array[i];
 
       uint32_t time_passed = measure_one_block_access_time(addr);
-      cout << "time passed = " << time_passed << endl;
+      // cout << "time passed = " << time_passed << endl;
     }
     // Put your covert channel code here
   }
