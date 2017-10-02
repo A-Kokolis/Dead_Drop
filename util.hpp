@@ -27,11 +27,9 @@
 #define L3_SETS L3_SIZE / (L3_WAYS * CACHE_LINE_SIZE)
 #define HIT_TIME 50
 
-#define set_number 8
-#define set_jump 1024
-#define repetition_num 100
-
-
+#define SET_NUM 8
+#define SET_JUMP 1024
+#define REPETION_NUM 100
 
 CYCLES measure_one_block_access_time(ADDR_PTR addr);
 
