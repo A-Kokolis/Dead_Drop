@@ -18,7 +18,7 @@ int main(int argc, char **argv) {
   channel = (char *)malloc(L3_SIZE);
 
   if (channel == NULL) {
-    cerr << "Failed to allocate memory of size " << L3_SIZE << " bytes";
+    cerr << "Failed to allocate memory of size " << L3_SIZE << " bytes\n";
     return -1;
   }
 
@@ -54,18 +54,31 @@ int main(int argc, char **argv) {
 void prepare_channel(char *channel, uint32_t *sets) {
 
   uint32_t time_passed;
-  // initialize the channel
-  memset(channel, 1, L3_SIZE);
-  // grab the beggining of the array
-  uint64_t addr = (uint64_t)&channel[0];
-  // sleep to give time to the sender to write
-  sleep(SLEEP_TIME);
+  uint64_t addr;
+
+  // initiliaze the sets miss/hit history
+  memset(sets, 0, L3_SETS);
+
+  for (uint32_t reps; reps < REPETITION_NUM; reps++) {
+    // initialize the channel
+    memset(channel, 1, L3_SIZE);
+    // grab the beggining of the array
+    addr = (uint64_t)&channel[0];
+    // sleep to give time to the sender to write
+    sleep(SLEEP_TIME);
+
+    for (uint32_t i = 0; i < L3_SETS; i++) {
+      // measure the access time for each line
+      time_passed = measure_one_block_access_time(addr);
+      // and mark the misses
+      sets[i] += (time_passed > HIT_TIME ? 1 : 0);
+      // grab the next cache line
+      addr += CACHE_LINE_SIZE;
+    }
+  }
 
   for (uint32_t i = 0; i < L3_SETS; i++) {
-    // measure the access time for each line
-    time_passed = measure_one_block_access_time(addr);
-    // and mark the misses
-    sets[i] += (time_passed > HIT_TIME ? 1 : 0);
-    addr += CACHE_LINE_SIZE;
+    cout << sets[i] << "\t";
   }
+  cout << "\n";
 }
