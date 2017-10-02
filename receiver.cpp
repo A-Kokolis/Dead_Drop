@@ -56,12 +56,16 @@ void prepare_channel(char *channel, uint32_t *sets) {
   uint32_t time_passed;
   // initialize the channel
   memset(channel, 1, L3_SIZE);
+  // grab the beggining of the array
   uint64_t addr = (uint64_t)&channel[0];
+  // sleep to give time to the sender to write
   sleep(SLEEP_TIME);
 
   for (uint32_t i = 0; i < L3_SETS; i++) {
+    // measure the access time for each line
     time_passed = measure_one_block_access_time(addr);
-    sets[i] += (time_passed > HIT_TIME ? 0 : 1);
+    // and mark the misses
+    sets[i] += (time_passed > HIT_TIME ? 1 : 0);
     addr += CACHE_LINE_SIZE;
   }
 }
