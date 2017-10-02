@@ -2,11 +2,6 @@
 #include"util.hpp"
 #include <unistd.h>
 
-#define set_number 8
-#define set_jump 1024
-#define repetition_num 100
-
-
 void establish_covert_channel(char *communication_buffer){
 	 int i,iter;
 
