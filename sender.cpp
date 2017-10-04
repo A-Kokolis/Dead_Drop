@@ -7,12 +7,12 @@ void establish_covert_channel(char *communication_buffer){
 
 	 //Write to specific sets in the LLC cache to figure out the cache sets that we are
 	 //gonna be using for the communication
-	 for(iter=0; iter<REPETITION_NUM; iter++){
+	 for(iter=0; iter<REPETITION_NUM*100; iter++){
 	 	for(i=0; i<SET_NUM; i+= SET_JUMP){
 
 			communication_buffer[i] = 'a';	
 	  	}
-		sleep(0.01);
+		sleep(0.1);
 	 }
 
 

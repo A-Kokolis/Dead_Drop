@@ -21,7 +21,7 @@
 #define SLEEP_TIME 0.00001
 
 // L3 cache specs
-#define L3_SIZE 8388608 / 2
+#define L3_SIZE 8388608
 #define L3_WAYS 16
 #define CACHE_LINE_SIZE 64
 #define L3_SETS L3_SIZE / (L3_WAYS * CACHE_LINE_SIZE)
