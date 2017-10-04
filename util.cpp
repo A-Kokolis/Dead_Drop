@@ -1,12 +1,6 @@
 
 #include "util.hpp"
 
-// L3 cache size in bytes
-#define L3_SIZE 8000000
-#define L3_WAYS 16
-#define CACHE_LINE_SIZE 64
-#define L3_SETS L3_SIZE / (L3_WAYS * CACHE_LINE_SIZE)
-
 /* Measure the time it takes to access a block with virtual address addr. */
 CYCLES measure_one_block_access_time(ADDR_PTR addr) {
   CYCLES cycles;
