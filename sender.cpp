@@ -12,7 +12,7 @@ void establish_covert_channel(char *communication_buffer){
 
 			communication_buffer[i] = 'a';	
 	  	}
-		sleep(0.000001);
+		sleep(0.01);
 	 }
 
 
@@ -30,7 +30,10 @@ int main(int argc, char **argv)
 
 	char *communication_buffer;
 
-	communication_buffer = (char*)malloc(sizeof(char)*8000000);	
+	communication_buffer = (char*)malloc(sizeof(char)*L3_SIZE);	
+
+	sleep(2);
+	establish_covert_channel(communication_buffer);
 
 	printf("Please type a message.\n");
 
