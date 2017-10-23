@@ -4,10 +4,18 @@ enclave {
     trusted {
         /* define ECALLs here. */
         public int generate_random_number(void);
+        public void establish_covert_channel([in,size=32768] char *communication_buffer,[out,size=32] uint64_t comm_set_addresses[4][8]);
+        public void signal_readyTosend([in,size=32] uint64_t comm_set_addresses[4][8]);
+        public void send_Bit([in,size=32] uint64_t comm_set_addresses[4][8]);
+        public void signal_stopSending([in,size=32] uint64_t comm_set_addresses[4][8]);
+        void clflush(uint64_t addr);
+
+
+
     };
 
     untrusted {
         /* define OCALLs here. */
-        void ocall_print([in, string]const char* str);
+        void ocall_print([in, string]const char* str, uint64_t addr);
     };
 };

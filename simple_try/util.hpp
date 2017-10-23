@@ -40,5 +40,13 @@ void clflush(ADDR_PTR addr);
 //We take 3 sets that we are gonna use for our implementation
 //Sets 5, 17, 23, 27
 void establish_covert_channel(char communication_buffer[], uint64_t comm_set_addresses[][8]);
+void signal_readyTosend(uint64_t comm_set_addresses[][8]);
+void send_Bit(uint64_t comm_set_addresses[][8]);
+void signal_stopSending(uint64_t comm_set_addresses[][8]);
+int recv_bit(uint64_t comm_set_addresses[][8]);
+int wait_to_recv(uint64_t comm_set_addresses[][8]);
+void receive_msg(uint64_t comm_set_addresses[][8]);
+void send_msg(char *text_buf, uint64_t comm_set_addresses[][8]);
+void send_break(uint64_t comm_set_addresses[][8]);
 
 #endif
