@@ -251,17 +251,17 @@ void send_msg(char *text_buf, uint64_t comm_set_addresses[][8]){
            letter = bitset<8>(text_buf[chars]);
            for(int i=7; i>=0; i--){
              signal:;
-             printf("Signal ready to send\n");
+             //printf("Signal ready to send\n");
              signal_readyTosend(comm_set_addresses);
 
             if(letter[i]){
-                printf("Sending 1\n");
+                //printf("Sending 1\n");
                 send_Bit(comm_set_addresses);
-                printf("Signal stop sending\n");
+                //printf("Signal stop sending\n");
                 signal_stopSending(comm_set_addresses);
-                printf("Signal stop sending DONE\n");
+                //printf("Signal stop sending DONE\n");
             }else{
-              printf("Sending 0\n");
+              //printf("Sending 0\n");
               signal_stopSending(comm_set_addresses);
             }
           }

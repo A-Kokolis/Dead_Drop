@@ -78,7 +78,7 @@ int main(int argc, char const *argv[]) {
                     }
 
                     //printf("Sleeping\n");
-                    sleep(2);
+                    //sleep(2);
 
 
                    //printf("sleeping\n");

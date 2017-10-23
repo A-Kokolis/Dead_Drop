@@ -13,7 +13,7 @@ void establish_covert_channel(char *communication_buffer){
 	 int i,iter,j;
 	 char text_buf[128];
 
-	for(i=0; i<SET_JUMP; i+= 64){
+	for(i=0; i<SET_JUMP*2; i+= 64*2){
 	      for (j=0; j<SET_NUM*4096;j+=4096){
 		   //for (j=0; j<SET_JUMP;j++){
 			communication_buffer[i+j] = 'a';	
@@ -35,7 +35,7 @@ void establish_covert_channel(char *communication_buffer){
 	 //Write to specific sets in the LLC cache to figure out the cache sets that we are
 	 //gonna be using for the communication
 	 for(iter=0; iter<REPETITION_NUM*200; iter++){
-	 	for(i=0; i<SET_JUMP; i+= 64){
+	 	for(i=0; i<SET_JUMP*2; i+= 64*2){
 		   for (j=0; j<SET_NUM*4096;j+=4096){
 		   //for (j=0; j<SET_JUMP;j++){
 			communication_buffer[i+j] = 'a';	
@@ -87,7 +87,7 @@ int main(int argc, char **argv)
 		 //cout<<"letter = "<<letter<<endl;
 		 for(iter=0; iter<REPETITION_NUM*100; iter++){
 		 	bitcount=7;
-			for(i=0; i<SET_JUMP; i+= 64){
+			for(i=0; i<SET_JUMP*2; i+= 64*2){
 			   for (j=0; j<SET_NUM*4096;j+=4096){
 				//cout<<letter[bitcount];	
 				if(letter[bitcount]){

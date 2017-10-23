@@ -15,6 +15,8 @@ void prepare_channel(char *channel, uint32_t sets[][2], uint32_t sets_used[][3])
 // over the communication channel
 char receive_msg(uint32_t sets_used[][3]);
 
+char receive_msg2(uint32_t sets_used[][3]);
+
 // array shuflle function from:https://stackoverflow.com/questions/6127503/shuffle-array-in-c
 void shuffle (uint64_t *array, uint64_t n);
 // communication buffer
@@ -31,7 +33,7 @@ int main(int argc, char **argv) {
   fgets(text_buf, sizeof(text_buf), stdin);
 
   for (uint32_t i = 0; i < MSG_NUM; i++){
-  	printf("%c\n",receive_msg(sets_used));
+  	printf("%c\n",receive_msg2(sets_used));
   }
   
   return 0;
@@ -125,6 +127,35 @@ void prepare_channel(char *channel, uint32_t sets[][2], uint32_t sets_used[][3])
   cout << "\n";
 
 }
+
+char receive_msg2(uint32_t sets_used[][3]){
+  int i,j, iter;
+  uint32_t time_passed;
+
+	for(i=0; i< 24; i++){
+		sets_used[i][0] = 0;
+    		cout <<sets_used[i][0]<<" "<<sets_used[i][1]<< " " << sets_used[i][2] <<"\t";
+	}
+
+
+	 for(iter=0; iter<REPETITION_NUM*100; iter++){
+		for(i=0; i<24; i++){
+		   for (j=0; j<SET_NUM*4096;j+=4096){
+		        time_passed = measure_one_block_access_time( sets_used[i][2]+j);
+			sets_used[i][0] += (time_passed> HIT_TIME && time_passed< UPPER_MISS_TIME? 1 : 0 );
+
+		   }
+		}
+	}
+
+
+	for(i=0; i< 24; i++){
+    		cout <<sets_used[i][0]<<" "<<sets_used[i][1]<< " " << sets_used[i][2] <<"\t";
+	}
+
+}
+
+
 
 char receive_msg(uint32_t sets_used[][3]){
 
