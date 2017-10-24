@@ -16,6 +16,7 @@
 #include <bitset>
 #include <iostream>
 #include <stdint.h>
+# include <sys/time.h>
 
 
 #ifndef UTIL_H_

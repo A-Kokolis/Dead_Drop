@@ -88,7 +88,7 @@ int recv_bit(uint64_t comm_set_addresses[][8]){
 				result=1;
 			}
 			if(misses2 > WAIT_THR){
-				cout<<"break misses = "<<misses<<endl;
+				//cout<<"break misses = "<<misses<<endl;
 				break;
 			}
 			//for(i=0;i<8;i++){
@@ -118,6 +118,7 @@ int main(int argc, char **argv)
 	// Put your covert channel setup code here
 	int i,j,bitcount=0;
 	uint32_t time_passed;
+  struct timeval tts, ttf;
 	bitset<8> msg;
 
 	establish_covert_channel(communication_buffer, comm_set_addresses);
@@ -144,15 +145,18 @@ int main(int argc, char **argv)
 
 	bool listening = true;
 	while (listening) {
-		printf("Waiting for a new bit signal\n");
+		//printf("Waiting for a new bit signal\n");
 		wait_to_recv(comm_set_addresses);
 		//printf("Signal that I am ready to recv\n");
 
 		//signal_readyTorecv(comm_set_addresses);
 		//sleep(10);
-		printf("Going to recv bit\n");
+		//printf("Going to recv bit\n");
+    gettimeofday(&tts,NULL);
 		i = recv_bit(comm_set_addresses);
-		printf("I received %d\n",i);
+    gettimeofday(&ttf,NULL);
+    printf("Time to receive a bit= %lf\n", (ttf.tv_sec-tts.tv_sec)+(ttf.tv_usec-tts.tv_usec)*0.000001);
+		//printf("I received %d\n",i);
 		//sleep(10);
 		msg.set(7-bitcount,i);
 		bitcount++;
